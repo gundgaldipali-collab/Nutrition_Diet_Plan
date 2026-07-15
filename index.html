@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NutriLife | Nutrition & Diet Plan</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Segoe UI',sans-serif;
+scroll-behavior:smooth;
+}
+
+body{
+background:#f5fff8;
+color:#333;
+}
+
+nav{
+position:fixed;
+top:0;
+width:100%;
+background:white;
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:18px 8%;
+box-shadow:0 5px 15px rgba(0,0,0,.1);
+z-index:100;
+}
+
+.logo{
+font-size:28px;
+font-weight:bold;
+color:#28a745;
+}
+
+nav ul{
+display:flex;
+list-style:none;
+}
+
+nav ul li{
+margin-left:25px;
+}
+
+nav ul li a{
+text-decoration:none;
+color:#333;
+font-weight:600;
+transition:.3s;
+}
+
+nav ul li a:hover{
+color:#28a745;
+}
+
+.hero{
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background:linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.55)),
+url("https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&w=1500&q=80");
+background-size:cover;
+background-position:center;
+text-align:center;
+padding:20px;
+color:white;
+}
+
+.hero h1{
+font-size:60px;
+margin-bottom:20px;
+}
+
+.hero p{
+font-size:22px;
+margin-bottom:30px;
+}
+
+.btn{
+display:inline-block;
+padding:15px 35px;
+background:#28a745;
+color:white;
+text-decoration:none;
+border-radius:30px;
+font-weight:bold;
+transition:.3s;
+}
+
+.btn:hover{
+background:#1d7d33;
+transform:scale(1.05);
+}
+
+section{
+padding:90px 10%;
+}
+
+.title{
+text-align:center;
+font-size:40px;
+margin-bottom:50px;
+color:#28a745;
+}
+
+.about{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+gap:40px;
+align-items:center;
+}
+
+.about img{
+width:100%;
+border-radius:20px;
+box-shadow:0 15px 25px rgba(0,0,0,.2);
+}
+
+.about h2{
+font-size:35px;
+margin-bottom:20px;
+}
+
+.about p{
+line-height:1.8;
+font-size:18px;
+}
+
+.cards{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:30px;
+}
+
+.card{
+background:white;
+padding:30px;
+border-radius:20px;
+text-align:center;
+box-shadow:0 10px 25px rgba(0,0,0,.08);
+transition:.4s;
+}
+
+.card:hover{
+transform:translateY(-10px);
+}
+
+.card img{
+width:100%;
+height:180px;
+object-fit:cover;
+border-radius:15px;
+margin-bottom:20px;
+}
+
+.card h3{
+color:#28a745;
+margin-bottom:15px;
+}
+
+.bmi{
+background:#28a745;
+color:white;
+border-radius:20px;
+padding:40px;
+text-align:center;
+}
+
+.bmi input{
+width:220px;
+padding:12px;
+margin:10px;
+border:none;
+border-radius:10px;
+}
+
+.bmi button{
+padding:12px 30px;
+border:none;
+background:white;
+color:#28a745;
+font-weight:bold;
+border-radius:10px;
+cursor:pointer;
+}
+
+.testimonials{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+gap:30px;
+}
+
+.review{
+background:white;
+padding:25px;
+border-radius:20px;
+box-shadow:0 8px 20px rgba(0,0,0,.08);
+}
+
+.review h4{
+color:#28a745;
+margin-bottom:10px;
+}
+
+.contact{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+gap:40px;
+}
+
+.contact input,
+.contact textarea{
+width:100%;
+padding:15px;
+margin:10px 0;
+border:1px solid #ccc;
+border-radius:10px;
+}
+
+.contact button{
+padding:15px;
+background:#28a745;
+color:white;
+border:none;
+border-radius:10px;
+font-size:17px;
+cursor:pointer;
+}
+
+footer{
+background:#222;
+color:white;
+text-align:center;
+padding:25px;
+margin-top:50px;
+}
+
+@media(max-width:768px){
+
+.hero h1{
+font-size:40px;
+}
+
+.hero p{
+font-size:18px;
+}
+
+nav{
+flex-direction:column;
+}
+
+nav ul{
+margin-top:15px;
+}
+
+}
+
+</style>
+
+</head>
+<body>
+  <script>
+
+document.addEventListener("DOMContentLoaded",function(){
+
+const btn=document.getElementById("bmiBtn");
+
+btn.addEventListener("click",function(){
+
+let height=parseFloat(document.getElementById("height").value);
+
+let weight=parseFloat(document.getElementById("weight").value);
+
+let result=document.getElementById("result");
+
+if(isNaN(height)||isNaN(weight)||height<=0||weight<=0){
+
+result.innerHTML="Please enter valid values.";
+
+return;
+
+}
+
+height=height/100;
+
+let bmi=weight/(height*height);
+
+let category="";
+
+if(bmi<18.5){
+
+category="Underweight";
+
+}
+
+else if(bmi<25){
+
+category="Normal Weight";
+
+}
+
+else if(bmi<30){
+
+category="Overweight";
+
+}
+
+else{
+
+category="Obese";
+
+}
+
+result.innerHTML=
+
+"Your BMI is <b>"+bmi.toFixed(2)+"</b><br>"+category;
+
+});
+
+});
+
+</script>
+  <script>
+  window.wxOConfiguration = {
+    orchestrationID: "ebf38faf218e4468b821617ac1f5b76f_308c8675-6326-4712-9201-0aad5b5fee15",
+    hostURL: "https://au-syd.watson-orchestrate.cloud.ibm.com",
+    rootElementID: "root",
+    deploymentPlatform: "ibmcloud",
+    crn: "crn:v1:bluemix:public:watsonx-orchestrate:au-syd:a/ebf38faf218e4468b821617ac1f5b76f:308c8675-6326-4712-9201-0aad5b5fee15::",
+    chatOptions: {
+        agentId: "60547922-ebfa-49f6-95b4-bce497067cde", 
+    }
+  };
+  setTimeout(function () {
+    const script = document.createElement('script');
+    script.src = `${window.wxOConfiguration.hostURL}/wxochat/wxoLoader.js?embed=true`;
+    script.addEventListener('load', function () {
+        wxoLoader.init();
+    });
+    document.head.appendChild(script);
+  }, 0);                     
+</script>
+
+<nav>
+
+<div class="logo">🥗 NutriLife</div>
+
+<ul>
+<li><a href="#">Home</a></li>
+<li><a href="#about">About</a></li>
+<li><a href="#plans">Plans</a></li>
+<li><a href="#foods">Foods</a></li>
+<li><a href="#contact">Contact</a></li>
+</ul>
+
+</nav>
+
+<section class="hero">
+
+<div>
+
+<h1>Healthy Food, Healthy Life</h1>
+
+<p>Your Personalized Nutrition & Diet Plan Starts Today</p>
+
+<a href="#plans" class="btn">Explore Plans</a>
+
+</div>
+
+</section>
+
+<section id="about">
+
+<h1 class="title">About Nutrition</h1>
+
+<div class="about">
+
+<img src="https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=900&q=80">
+
+<div>
+
+<h2>Eat Better. Live Better.</h2>
+
+<p>
+
+Good nutrition improves your health, boosts immunity,
+helps maintain weight, and increases energy levels.
+A balanced diet includes proteins, carbohydrates,
+healthy fats, vitamins, minerals, and plenty of water.
+
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+<section id="plans">
+
+<h1 class="title">Diet Plans</h1>
+
+<div class="cards">
+
+<div class="card">
+
+<img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=800&q=80">
+
+<h3>Weight Loss</h3>
+
+<p>High protein, low calorie meals with fruits, vegetables and lean meat.</p>
+
+</div>
+
+<div class="card">
+
+<img src="https://images.unsplash.com/photo-1498837167922-ddd27525d352?auto=format&fit=crop&w=800&q=80">
+
+<h3>Muscle Gain</h3>
+
+<p>Protein-rich meals with healthy carbohydrates and strength nutrition.</p>
+
+</div>
+
+<div class="card">
+
+<img src="https://images.unsplash.com/photo-1466637574441-749b8f19452f?auto=format&fit=crop&w=800&q=80">
+
+<h3>Balanced Diet</h3>
+
+<p>Perfect nutrition plan for maintaining a healthy lifestyle.</p>
+
+</div>
+
+</div>
+
+</section>
+
+<section id="foods">
+
+<h1 class="title">Healthy Foods</h1>
+
+<div class="cards">
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=800&q=80">
+<h3>Fresh Salad</h3>
+</div>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1502741338009-cac2772e18bc?auto=format&fit=crop&w=800&q=80">
+<h3>Fresh Fruits</h3>
+</div>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1512058564366-18510be2db19?auto=format&fit=crop&w=800&q=80">
+<h3>Healthy Breakfast</h3>
+</div>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1511690743698-d9d85f2fbf38?auto=format&fit=crop&w=800&q=80">
+<h3>Protein Meal</h3>
+</div>
+
+</div>
+
+</section>
+
+<section id="bmi">
+
+<div class="bmi">
+
+<h1>BMI Calculator</h1>
+
+<input type="number" id="height" placeholder="Height in cm">
+
+<input type="number" id="weight" placeholder="Weight in kg">
+
+<br><br>
+
+<button id="bmiBtn">
+Calculate BMI
+</button>
+
+<h2 id="result"></h2>
+
+</div>
+
+</section>
+
+<section>
+
+<h1 class="title">Testimonials</h1>
+
+<div class="testimonials">
+
+<div class="review">
+
+<h4>⭐⭐⭐⭐⭐ Priya</h4>
+
+<p>
+This nutrition plan completely changed my lifestyle.
+I lost 8 kg in just 3 months.
+</p>
+
+</div>
+
+<div class="review">
+
+<h4>⭐⭐⭐⭐⭐ Rahul</h4>
+
+<p>
+Simple meal plans and excellent guidance.
+Highly recommended for beginners.
+</p>
+
+</div>
+
+<div class="review">
+
+<h4>⭐⭐⭐⭐⭐ Sneha</h4>
+
+<p>
+Healthy recipes and balanced diets helped me stay fit every day.
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+<section id="contact">
+
+<h1 class="title">Contact Us</h1>
+
+<div class="contact">
+
+<div>
+
+<h2>Get Your Personal Diet Plan</h2>
+
+<p>Email: nutrition@example.com</p>
+
+<p>Phone: +91 9876543210</p>
+
+<p>Available: Monday - Saturday</p>
+
+</div>
+
+<form>
+
+<input type="text" placeholder="Your Name">
+
+<input type="email" placeholder="Email">
+
+<textarea rows="6" placeholder="Message"></textarea>
+
+<button>Send Message</button>
+
+</form>
+
+</div>
+
+</section>
+<section>
+
+<div class="bmi">
+
+<h1>BMI Calculator</h1>
+
+<p>Enter your height and weight</p>
+
+<br>
+
+<input type="number" id="height" placeholder="Height (cm)">
+
+<input type="number" id="weight" placeholder="Weight (kg)">
+
+<br><br>
+
+<button type="button" onclick="calculateBMI()">
+    Calculate BMI
+</button>
+
+<h2 id="result" style="margin-top:20px;"></h2>
+
+</div>
+
+</section>
+
+<footer>
+
+© 2026 NutriLife | Healthy Food • Healthy Life
+
+</footer>
+
+
+</body>
+
+</html>
